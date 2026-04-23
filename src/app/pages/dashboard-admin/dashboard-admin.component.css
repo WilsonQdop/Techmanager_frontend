@@ -1,0 +1,168 @@
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-card {
+  padding: var(--spacing-padding-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.stat-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-card-body {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.trend-up { color: var(--color-error); }
+.trend-down { color: #15803d; }
+.trend-neutral { color: var(--color-on-surface-variant); }
+
+/* Updates Card */
+.updates-card {
+  overflow: hidden;
+}
+
+.updates-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-outline-variant);
+  background-color: var(--color-surface-container-low);
+}
+
+.updates-list {
+  list-style: none;
+}
+
+.update-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-outline-variant);
+  transition: background-color 0.2s;
+}
+
+.update-item:last-child {
+  border-bottom: none;
+}
+
+.update-item:hover {
+  background-color: var(--color-surface-container-low);
+}
+
+.update-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.update-content {
+  flex: 1;
+}
+
+.update-title {
+  font-weight: 600;
+}
+
+.update-desc {
+  margin-top: 4px;
+}
+
+.update-time {
+  display: block;
+  margin-top: 8px;
+  color: var(--color-outline);
+}
+
+.update-badge {
+  flex-shrink: 0;
+}
+
+/* Ghost button override */
+.btn-ghost {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+  padding: 4px 8px;
+}
+
+.btn-ghost:hover {
+  opacity: 0.8;
+}

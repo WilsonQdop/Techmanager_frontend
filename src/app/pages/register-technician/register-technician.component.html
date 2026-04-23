@@ -1,0 +1,111 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="Cadastro de Técnico" badge="Novo Registro"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <div class="page-header-section">
+        <h1 class="text-h1 text-on-surface">Novo Técnico</h1>
+        <p class="text-body-lg text-on-surface-variant" style="margin-top: 8px;">Preencha os dados abaixo para registrar um novo colaborador técnico.</p>
+      </div>
+
+      <div class="card form-card">
+        <div class="form-body">
+          <form class="form-grid" (ngSubmit)="onSave()">
+
+            <!-- Nome Completo -->
+            <div class="form-group col-span-2">
+              <label class="form-label" for="nome">Nome Completo</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">person</span>
+                <input class="form-input" id="nome" type="text" placeholder="Ex: João Silva Mendes" [(ngModel)]="form.nome" name="nome" required />
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+              <label class="form-label" for="email">Email Profissional</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">mail</span>
+                <input class="form-input" id="email" type="email" placeholder="nome@empresa.com.br" [(ngModel)]="form.email" name="email" required />
+              </div>
+            </div>
+
+            <!-- Telefone -->
+            <div class="form-group">
+              <label class="form-label" for="telefone">Telefone para Contato</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">call</span>
+                <input class="form-input" id="telefone" type="tel" placeholder="(00) 00000-0000" [(ngModel)]="form.telefone" name="telefone" />
+              </div>
+            </div>
+
+            <!-- Especialidade -->
+            <div class="form-group">
+              <label class="form-label" for="especialidade">Especialidade / Categoria</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">build</span>
+                <select class="form-input" id="especialidade" [(ngModel)]="form.especialidade" name="especialidade">
+                  <option value="" disabled selected>Selecione uma especialidade</option>
+                  <option value="redes">Redes</option>
+                  <option value="hardware">Hardware</option>
+                  <option value="software">Software</option>
+                  <option value="infraestrutura">Infraestrutura</option>
+                </select>
+                <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+              </div>
+            </div>
+
+            <!-- Regional -->
+            <div class="form-group">
+              <label class="form-label" for="regional">Regional</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">location_on</span>
+                <select class="form-input" id="regional" [(ngModel)]="form.regional" name="regional">
+                  <option value="" disabled selected>Selecione a regional</option>
+                  <option value="norte">Norte</option>
+                  <option value="sul">Sul</option>
+                  <option value="leste">Leste</option>
+                  <option value="oeste">Oeste</option>
+                  <option value="centro">Centro</option>
+                </select>
+                <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+              </div>
+            </div>
+
+            <!-- Senha -->
+            <div class="form-group">
+              <label class="form-label" for="senha">Senha de Acesso Temporária</label>
+              <div class="form-input-icon">
+                <span class="material-symbols-outlined icon-left">lock</span>
+                <input
+                  class="form-input"
+                  id="senha"
+                  [type]="showPassword ? 'text' : 'password'"
+                  placeholder="••••••••"
+                  [(ngModel)]="form.senha"
+                  name="senha"
+                />
+                <button type="button" class="icon-right" (click)="togglePassword()">
+                  <span class="material-symbols-outlined" style="font-size: 20px;">{{ showPassword ? 'visibility' : 'visibility_off' }}</span>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Footer de Ações -->
+        <div class="form-footer">
+          <button type="button" class="btn btn-outline" (click)="onCancel()">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="onSave()">
+            <span class="material-symbols-outlined" style="font-size: 18px;">save</span>
+            Salvar Cadastro
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

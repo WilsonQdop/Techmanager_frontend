@@ -1,0 +1,104 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="TechManager"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="text-h1 text-on-surface">Visão Geral</h1>
+          <p class="text-body-lg text-on-surface-variant" style="margin-top: 4px;">Resumo das suas atividades e chamados pendentes.</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-outline">
+            <span class="material-symbols-outlined" style="font-size: 20px;">filter_list</span>
+            Filtrar
+          </button>
+          <button class="btn btn-primary" (click)="navigateToNewTicket()">
+            <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+            Novo Registro
+          </button>
+        </div>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="metrics-grid">
+        <div class="card metric-card" *ngFor="let metric of metrics">
+          <div class="metric-header">
+            <span class="text-label-md text-on-surface-variant metric-label">{{ metric.label }}</span>
+            <div class="metric-icon" [style.background-color]="metric.iconBg">
+              <span class="material-symbols-outlined" [style.color]="metric.iconColor" style="font-size: 18px;">{{ metric.icon }}</span>
+            </div>
+          </div>
+          <div class="metric-value">
+            <span class="text-h1 text-on-surface">{{ metric.value }}</span>
+            <span *ngIf="metric.trend" class="metric-trend text-label-md" [class.trend-error]="metric.trendError">
+              <span class="material-symbols-outlined" style="font-size: 14px;">{{ metric.trendIcon }}</span>
+              {{ metric.trend }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid: Tabela + Sidebar -->
+      <div class="content-grid">
+        <!-- Tabela de Chamados -->
+        <div class="card tickets-table-card">
+          <div class="table-header">
+            <h3 class="text-h3 text-on-surface">Meus Chamados Prioritários</h3>
+            <a routerLink="/chamados" class="text-label-md text-secondary table-link">Ver Todos</a>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cliente</th>
+                  <th>Problema</th>
+                  <th>Status</th>
+                  <th class="text-right">SLA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of tickets">
+                  <td class="ticket-id">{{ ticket.id }}</td>
+                  <td>{{ ticket.client }}</td>
+                  <td>{{ ticket.problem }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="ticket.statusClass">{{ ticket.status }}</span>
+                  </td>
+                  <td class="text-right">
+                    <span class="text-label-md" [class.sla-warning]="ticket.slaWarning">{{ ticket.sla }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sidebar: Tarefas -->
+        <div class="card tasks-card">
+          <div class="tasks-header">
+            <h3 class="text-h3 text-on-surface">Tarefas do Dia</h3>
+            <span class="badge badge-blue">{{ pendingTasks }} pendentes</span>
+          </div>
+          <ul class="tasks-list">
+            <li class="task-item" *ngFor="let task of tasks">
+              <div class="task-checkbox" [class.checked]="task.done" (click)="toggleTask(task)">
+                <span class="material-symbols-outlined" style="font-size: 16px;">{{ task.done ? 'check_circle' : 'radio_button_unchecked' }}</span>
+              </div>
+              <div class="task-content">
+                <p class="text-body-md text-on-surface task-title" [class.done]="task.done">{{ task.title }}</p>
+                <p class="text-label-md text-on-surface-variant">{{ task.client }}</p>
+              </div>
+              <span class="badge" [ngClass]="task.priorityClass">{{ task.priority }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

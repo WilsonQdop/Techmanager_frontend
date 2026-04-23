@@ -1,0 +1,21 @@
+<header class="topbar">
+  <div class="topbar-left">
+    <h2 class="topbar-title">{{ title }}</h2>
+    <span *ngIf="badge" class="topbar-badge">{{ badge }}</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-icon" title="Contraste" (click)="toggleTheme()">
+      <span class="material-symbols-outlined">contrast</span>
+    </button>
+    <button class="btn-icon topbar-notif" title="Notificações">
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="notif-dot"></span>
+    </button>
+    <div class="topbar-divider"></div>
+    <div class="topbar-user">
+      <div class="topbar-avatar">JS</div>
+      <span class="topbar-username">João Silva</span>
+      <span class="material-symbols-outlined topbar-chevron">expand_more</span>
+    </div>
+  </div>
+</header>

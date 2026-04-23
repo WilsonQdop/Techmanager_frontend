@@ -1,0 +1,109 @@
+<div class="login-wrapper">
+  <!-- Painel esquerdo: Branding -->
+  <div class="login-brand">
+    <img
+      class="login-brand-bg"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDv0-DbIA-FGFFcSmWV5n3QJZpGuCedAeeCHPZBm_xicDev7IQM2M9aOTVL54it-2ydnQOAt-bpLgPILkTSTOX6BKyJpPDqk8lv2a9ppDE65GhY8MpVo_XjohJGdm3g9VmKskcmaap7g6LWt6kyYW1iyLdpkoHoSWcFtJiQFA0Zxgqslafn4GatFCisnzv8b9ZgJrdrMrqOZJ132P7pg9Eq9HQeRlzGm0OBgtDPzvwirKot6Tw5Zo9BuTpx5nx4YjkafJzKMmFIWns"
+      alt="Escritório corporativo moderno"
+    />
+    <div class="login-brand-overlay"></div>
+    <div class="login-brand-content">
+      <div class="login-brand-logo">
+        <span class="material-symbols-outlined fill">engineering</span>
+        <span class="login-brand-name">TechManager</span>
+      </div>
+      <div class="login-brand-hero">
+        <h2 class="text-h1 text-on-primary">Gestão Técnica<br/>Precisa e Escalável.</h2>
+        <p class="login-brand-desc text-primary-fixed-dim">
+          Otimize chamados, gerencie equipes de campo e acesse relatórios estruturados em uma única plataforma projetada para eficiência operacional.
+        </p>
+      </div>
+      <div class="login-brand-badges">
+        <div class="login-brand-badge">
+          <span class="material-symbols-outlined">verified</span>
+          <span>Sistema Confiável</span>
+        </div>
+        <div class="login-brand-dot"></div>
+        <div class="login-brand-badge">
+          <span class="material-symbols-outlined">security</span>
+          <span>Dados Seguros</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel direito: Formulário -->
+  <div class="login-form-panel">
+    <!-- Logo mobile -->
+    <div class="login-mobile-logo">
+      <span class="material-symbols-outlined fill" style="color: var(--color-primary-container)">engineering</span>
+      <span class="login-brand-name" style="color: var(--color-primary-container)">TechManager</span>
+    </div>
+
+    <div class="login-form-container">
+      <div class="login-form-header">
+        <h1 class="text-h2 text-on-surface">Acesse sua conta</h1>
+        <p class="text-body-md text-on-surface-variant">Insira suas credenciais corporativas para continuar.</p>
+      </div>
+
+      <form class="login-form" (ngSubmit)="onLogin()">
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email Profissional</label>
+          <div class="form-input-icon">
+            <span class="material-symbols-outlined icon-left">mail</span>
+            <input
+              class="form-input"
+              id="email"
+              type="email"
+              placeholder="nome@empresa.com.br"
+              [(ngModel)]="email"
+              name="email"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="form-group">
+          <label class="form-label" for="password">Senha</label>
+          <div class="form-input-icon">
+            <span class="material-symbols-outlined icon-left">lock</span>
+            <input
+              class="form-input"
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="••••••••"
+              [(ngModel)]="password"
+              name="password"
+              required
+            />
+            <button type="button" class="icon-right" (click)="togglePassword()">
+              <span class="material-symbols-outlined">{{ showPassword ? 'visibility' : 'visibility_off' }}</span>
+            </button>
+          </div>
+          <div class="login-forgot">
+            <a href="#" class="login-forgot-link">Esqueceu a senha?</a>
+          </div>
+        </div>
+
+        <!-- Botão -->
+        <button type="submit" class="btn btn-primary login-submit-btn">
+          <span class="material-symbols-outlined">login</span>
+          Entrar na Plataforma
+        </button>
+      </form>
+
+      <div class="login-divider">
+        <span class="login-divider-line"></span>
+        <span class="login-divider-text">ou</span>
+        <span class="login-divider-line"></span>
+      </div>
+
+      <p class="login-register-text">
+        Não tem uma conta?
+        <a routerLink="/cadastro" class="login-register-link">Criar conta agora</a>
+      </p>
+    </div>
+  </div>
+</div>

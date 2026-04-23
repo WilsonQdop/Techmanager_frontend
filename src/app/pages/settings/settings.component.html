@@ -1,0 +1,186 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="Configurações"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <div class="page-header-section">
+        <h1 class="text-h1 text-on-surface">Configurações</h1>
+        <p class="text-body-lg text-on-surface-variant" style="margin-top: 4px;">Gerencie seu perfil e preferências da plataforma.</p>
+      </div>
+
+      <div class="settings-grid">
+
+        <!-- Coluna 1: Perfil e Segurança -->
+        <div class="settings-col">
+
+          <!-- Perfil -->
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <h2 class="text-h3 text-on-surface">Perfil</h2>
+            </div>
+            <div class="settings-card-body">
+
+              <!-- Avatar -->
+              <div class="profile-avatar-section">
+                <div class="profile-avatar">JS</div>
+                <div>
+                  <p class="text-body-md text-on-surface" style="font-weight: 600;">João Silva</p>
+                  <p class="text-body-md text-on-surface-variant">Administrador</p>
+                  <button class="btn btn-outline btn-sm" style="margin-top: 8px;">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">photo_camera</span>
+                    Alterar foto
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-divider"></div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="nome">Nome Completo</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">person</span>
+                    <input class="form-input" id="nome" type="text" [(ngModel)]="profile.nome" name="nome" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="email">Email</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">mail</span>
+                    <input class="form-input" id="email" type="email" [(ngModel)]="profile.email" name="email" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="telefone">Telefone</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">call</span>
+                    <input class="form-input" id="telefone" type="tel" [(ngModel)]="profile.telefone" name="telefone" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="cargo">Cargo</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">badge</span>
+                    <input class="form-input" id="cargo" type="text" [(ngModel)]="profile.cargo" name="cargo" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Segurança -->
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <h2 class="text-h3 text-on-surface">Segurança</h2>
+            </div>
+            <div class="settings-card-body">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="senhaAtual">Senha Atual</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">lock</span>
+                    <input class="form-input" id="senhaAtual" type="password" placeholder="••••••••" [(ngModel)]="security.senhaAtual" name="senhaAtual" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="novaSenha">Nova Senha</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">lock_reset</span>
+                    <input class="form-input" id="novaSenha" type="password" placeholder="••••••••" [(ngModel)]="security.novaSenha" name="novaSenha" />
+                  </div>
+                </div>
+
+                <div class="form-group col-span-2">
+                  <label class="form-label" for="confirmarSenha">Confirmar Nova Senha</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">lock_reset</span>
+                    <input class="form-input" id="confirmarSenha" type="password" placeholder="••••••••" [(ngModel)]="security.confirmarSenha" name="confirmarSenha" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Coluna 2: Preferências -->
+        <div class="settings-col-narrow">
+
+          <!-- Preferências -->
+          <div class="card settings-card">
+            <div class="settings-card-header">
+              <h2 class="text-h3 text-on-surface">Preferências</h2>
+            </div>
+            <div class="settings-card-body">
+
+              <!-- Tema -->
+              <div class="pref-section">
+                <h3 class="text-label-md text-on-surface pref-title">Tema da Interface</h3>
+                <div class="theme-options">
+                  <label class="theme-option" [class.selected]="selectedTheme === 'light'">
+                    <input type="radio" name="theme" value="light" [(ngModel)]="selectedTheme" />
+                    <span class="material-symbols-outlined">light_mode</span>
+                    <span class="text-body-md text-on-surface">Modo Claro</span>
+                  </label>
+                  <label class="theme-option" [class.selected]="selectedTheme === 'dark'">
+                    <input type="radio" name="theme" value="dark" [(ngModel)]="selectedTheme" />
+                    <span class="material-symbols-outlined">dark_mode</span>
+                    <span class="text-body-md text-on-surface">Modo Escuro</span>
+                  </label>
+                  <label class="theme-option" [class.selected]="selectedTheme === 'contrast'">
+                    <input type="radio" name="theme" value="contrast" [(ngModel)]="selectedTheme" />
+                    <span class="material-symbols-outlined">contrast</span>
+                    <span class="text-body-md text-on-surface">Alto Contraste</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Notificações -->
+              <div class="pref-section">
+                <h3 class="text-label-md text-on-surface pref-title">Notificações</h3>
+                <label class="toggle-label">
+                  <div class="toggle-wrapper">
+                    <input type="checkbox" [(ngModel)]="notifications.email" class="toggle-input" />
+                    <div class="toggle-track" [class.active]="notifications.email">
+                      <div class="toggle-thumb"></div>
+                    </div>
+                  </div>
+                  <span class="text-body-md text-on-surface">Receber resumos por e-mail</span>
+                </label>
+                <label class="toggle-label" style="margin-top: 12px;">
+                  <div class="toggle-wrapper">
+                    <input type="checkbox" [(ngModel)]="notifications.push" class="toggle-input" />
+                    <div class="toggle-track" [class.active]="notifications.push">
+                      <div class="toggle-thumb"></div>
+                    </div>
+                  </div>
+                  <span class="text-body-md text-on-surface">Notificações push</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Botões de Ação -->
+          <div class="card settings-actions-card">
+            <button class="btn btn-primary btn-full" (click)="onSave()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">save</span>
+              Salvar Alterações
+            </button>
+            <button class="btn btn-outline btn-full" (click)="onCancel()">
+              Cancelar
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

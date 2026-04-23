@@ -1,0 +1,75 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="TechManager"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="text-h1 text-on-surface">Dashboard do Cliente</h1>
+          <p class="text-body-lg text-on-surface-variant" style="margin-top: 4px;">Acompanhe seus chamados e histórico de atendimentos.</p>
+        </div>
+        <button class="btn btn-primary" (click)="navigateToNewTicket()">
+          <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+          Abrir Chamado
+        </button>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="card stat-card" *ngFor="let stat of stats">
+          <div class="stat-header">
+            <span class="text-label-md text-on-surface-variant">{{ stat.label }}</span>
+            <div class="stat-icon" [style.background-color]="stat.iconBg">
+              <span class="material-symbols-outlined" [style.color]="stat.iconColor" style="font-size: 18px;">{{ stat.icon }}</span>
+            </div>
+          </div>
+          <span class="text-h2 text-on-surface stat-value">{{ stat.value }}</span>
+          <div *ngIf="stat.trend" class="stat-trend" [class.trend-up]="stat.trendUp" [class.trend-down]="!stat.trendUp">
+            <span class="material-symbols-outlined" style="font-size: 14px;">{{ stat.trendUp ? 'trending_up' : 'trending_down' }}</span>
+            <span class="text-label-md">{{ stat.trend }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chamados Recentes -->
+      <div class="card">
+        <div class="section-header">
+          <h3 class="text-h3 text-on-surface">Chamados Recentes</h3>
+          <a routerLink="/chamados" class="text-label-md text-secondary link">Ver Todos</a>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Assunto</th>
+                <th>Técnico</th>
+                <th>Status</th>
+                <th>Abertura</th>
+                <th class="text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of recentTickets">
+                <td class="ticket-id">{{ ticket.id }}</td>
+                <td>{{ ticket.subject }}</td>
+                <td>{{ ticket.technician }}</td>
+                <td><span class="badge" [ngClass]="ticket.statusClass">{{ ticket.status }}</span></td>
+                <td class="text-on-surface-variant">{{ ticket.date }}</td>
+                <td class="text-right">
+                  <button class="btn-icon" title="Ver detalhes">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

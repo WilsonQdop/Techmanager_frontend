@@ -1,0 +1,153 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="Abrir Chamado" badge="Novo"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <div class="page-header-section">
+        <h1 class="text-h1 text-on-surface">Novo Chamado</h1>
+        <p class="text-body-lg text-on-surface-variant" style="margin-top: 8px;">Descreva o problema para que possamos atribuir ao técnico mais adequado.</p>
+      </div>
+
+      <div class="card form-card">
+        <div class="form-body">
+          <form (ngSubmit)="onSubmit()">
+
+            <!-- Seção: Informações do Chamado -->
+            <div class="form-section">
+              <h3 class="text-h3 text-on-surface form-section-title">Informações do Chamado</h3>
+              <div class="form-grid">
+
+                <!-- Cliente -->
+                <div class="form-group">
+                  <label class="form-label" for="cliente">Cliente</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">business</span>
+                    <select class="form-input" id="cliente" [(ngModel)]="form.cliente" name="cliente">
+                      <option value="" disabled selected>Selecione o cliente</option>
+                      <option value="techcorp">TechCorp Solutions</option>
+                      <option value="industria-abc">Indústria ABC</option>
+                      <option value="varejo-xyz">Varejo XYZ</option>
+                      <option value="banco-beta">Banco Beta</option>
+                    </select>
+                    <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+                  </div>
+                </div>
+
+                <!-- Prioridade -->
+                <div class="form-group">
+                  <label class="form-label" for="prioridade">Prioridade</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">flag</span>
+                    <select class="form-input" id="prioridade" [(ngModel)]="form.prioridade" name="prioridade">
+                      <option value="" disabled selected>Selecione a prioridade</option>
+                      <option value="critica">Crítica</option>
+                      <option value="alta">Alta</option>
+                      <option value="media">Média</option>
+                      <option value="baixa">Baixa</option>
+                    </select>
+                    <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+                  </div>
+                </div>
+
+                <!-- Categoria -->
+                <div class="form-group">
+                  <label class="form-label" for="categoria">Categoria do Problema</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">category</span>
+                    <select class="form-input" id="categoria" [(ngModel)]="form.categoria" name="categoria">
+                      <option value="" disabled selected>Selecione a categoria</option>
+                      <option value="redes">Redes</option>
+                      <option value="hardware">Hardware</option>
+                      <option value="software">Software</option>
+                      <option value="infraestrutura">Infraestrutura</option>
+                      <option value="seguranca">Segurança</option>
+                    </select>
+                    <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+                  </div>
+                </div>
+
+                <!-- Técnico Responsável -->
+                <div class="form-group">
+                  <label class="form-label" for="tecnico">Técnico Responsável</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">engineering</span>
+                    <select class="form-input" id="tecnico" [(ngModel)]="form.tecnico" name="tecnico">
+                      <option value="" disabled selected>Atribuir técnico</option>
+                      <option value="carlos">Carlos Mendes</option>
+                      <option value="ana">Ana Paula</option>
+                      <option value="pedro">Pedro Costa</option>
+                      <option value="auto">Atribuição Automática</option>
+                    </select>
+                    <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+                  </div>
+                </div>
+
+                <!-- Título -->
+                <div class="form-group col-span-2">
+                  <label class="form-label" for="titulo">Título do Chamado</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">title</span>
+                    <input class="form-input" id="titulo" type="text" placeholder="Resumo breve do problema" [(ngModel)]="form.titulo" name="titulo" required />
+                  </div>
+                </div>
+
+                <!-- Descrição -->
+                <div class="form-group col-span-2">
+                  <label class="form-label" for="descricao">Descrição Detalhada</label>
+                  <textarea
+                    class="form-input form-textarea"
+                    id="descricao"
+                    placeholder="Descreva o problema com o máximo de detalhes possível..."
+                    [(ngModel)]="form.descricao"
+                    name="descricao"
+                    rows="5"
+                  ></textarea>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Seção: Agendamento -->
+            <div class="form-section">
+              <h3 class="text-h3 text-on-surface form-section-title">Agendamento</h3>
+              <div class="form-grid">
+
+                <!-- Data -->
+                <div class="form-group">
+                  <label class="form-label" for="data">Data Preferencial</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">calendar_today</span>
+                    <input class="form-input" id="data" type="date" [(ngModel)]="form.data" name="data" />
+                  </div>
+                </div>
+
+                <!-- Horário -->
+                <div class="form-group">
+                  <label class="form-label" for="horario">Horário Preferencial</label>
+                  <div class="form-input-icon">
+                    <span class="material-symbols-outlined icon-left">schedule</span>
+                    <input class="form-input" id="horario" type="time" [(ngModel)]="form.horario" name="horario" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="form-actions">
+              <button type="button" class="btn btn-outline" (click)="onCancel()">Cancelar</button>
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined" style="font-size: 18px;">send</span>
+                Abrir Chamado
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

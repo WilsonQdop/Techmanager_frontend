@@ -1,0 +1,70 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="TechManager"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="text-h1 text-on-surface">Dashboard</h1>
+          <p class="text-body-lg text-on-surface-variant" style="margin-top: 4px;">Bem-vindo de volta, João. Aqui está o resumo do dia.</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-outline">
+            <span class="material-symbols-outlined" style="font-size: 20px;">filter_list</span>
+            Filtrar
+          </button>
+          <button class="btn btn-primary" (click)="navigateToNewTicket()">
+            <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+            Novo Chamado
+          </button>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="card stat-card" *ngFor="let stat of stats">
+          <div class="stat-card-header">
+            <span class="text-label-md text-on-surface-variant stat-label">{{ stat.label }}</span>
+            <div class="stat-icon" [style.background-color]="stat.iconBg">
+              <span class="material-symbols-outlined" [style.color]="stat.iconColor" style="font-size: 18px;">{{ stat.icon }}</span>
+            </div>
+          </div>
+          <div class="stat-card-body">
+            <span class="text-h2 text-on-surface">{{ stat.value }}</span>
+            <div class="stat-trend" [class.trend-up]="stat.trendType === 'up'" [class.trend-down]="stat.trendType === 'down'" [class.trend-neutral]="stat.trendType === 'neutral'">
+              <span class="material-symbols-outlined" style="font-size: 14px;">{{ stat.trendIcon }}</span>
+              <span class="text-label-md">{{ stat.trend }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Updates -->
+      <div class="card updates-card">
+        <div class="updates-header">
+          <h3 class="text-h3 text-on-surface">Atualizações Recentes</h3>
+          <button class="btn-ghost text-secondary text-label-md">Ver Histórico Completo</button>
+        </div>
+        <ul class="updates-list">
+          <li class="update-item" *ngFor="let update of recentUpdates">
+            <div class="update-icon" [style.background-color]="update.iconBg">
+              <span class="material-symbols-outlined" [style.color]="update.iconColor" style="font-size: 18px;">{{ update.icon }}</span>
+            </div>
+            <div class="update-content">
+              <p class="text-body-md text-on-surface update-title">{{ update.title }}</p>
+              <p class="text-body-md text-on-surface-variant update-desc" [innerHTML]="update.description"></p>
+              <span class="text-label-md text-outline update-time">{{ update.time }}</span>
+            </div>
+            <div class="update-badge">
+              <span class="badge" [ngClass]="update.badgeClass">{{ update.badge }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+</div>

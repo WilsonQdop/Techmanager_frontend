@@ -1,0 +1,129 @@
+<div class="app-layout">
+  <app-sidebar></app-sidebar>
+  <app-topbar title="Chamados"></app-topbar>
+
+  <main class="main-content">
+    <div class="page-container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="text-h1 text-on-surface">Gerenciamento de Chamados</h1>
+          <p class="text-body-lg text-on-surface-variant" style="margin-top: 4px;">Gerencie e acompanhe todos os chamados técnicos.</p>
+        </div>
+        <button class="btn btn-primary" (click)="navigateToNewTicket()">
+          <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+          Novo Chamado
+        </button>
+      </div>
+
+      <!-- Filtros e Busca -->
+      <div class="card filters-card">
+        <div class="filters-row">
+          <div class="search-box form-input-icon">
+            <span class="material-symbols-outlined icon-left">search</span>
+            <input
+              class="form-input"
+              type="text"
+              placeholder="Buscar chamados..."
+              [(ngModel)]="searchTerm"
+              (input)="filterTickets()"
+            />
+          </div>
+          <div class="filter-group">
+            <div class="form-input-icon filter-select">
+              <span class="material-symbols-outlined icon-left">filter_list</span>
+              <select class="form-input" [(ngModel)]="statusFilter" (change)="filterTickets()">
+                <option value="">Todos os Status</option>
+                <option value="Aberto">Aberto</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Crítico">Crítico</option>
+              </select>
+              <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+            </div>
+            <div class="form-input-icon filter-select">
+              <span class="material-symbols-outlined icon-left">category</span>
+              <select class="form-input" [(ngModel)]="categoryFilter" (change)="filterTickets()">
+                <option value="">Todas as Categorias</option>
+                <option value="Redes">Redes</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Software">Software</option>
+                <option value="Infraestrutura">Infraestrutura</option>
+              </select>
+              <span class="material-symbols-outlined icon-right" style="pointer-events: none;">expand_more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela de Chamados -->
+      <div class="card tickets-card">
+        <div class="table-header">
+          <h3 class="text-h3 text-on-surface">Chamados ({{ filteredTickets.length }})</h3>
+          <div class="table-actions">
+            <button class="btn btn-outline btn-sm">
+              <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+              Exportar
+            </button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Assunto</th>
+                <th>Técnico</th>
+                <th>Categoria</th>
+                <th>Prioridade</th>
+                <th>Status</th>
+                <th>Data</th>
+                <th class="text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of filteredTickets">
+                <td class="ticket-id">{{ ticket.id }}</td>
+                <td>{{ ticket.client }}</td>
+                <td class="ticket-subject">{{ ticket.subject }}</td>
+                <td>{{ ticket.technician }}</td>
+                <td>
+                  <span class="badge badge-gray">{{ ticket.category }}</span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="ticket.priorityClass">{{ ticket.priority }}</span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="ticket.statusClass">{{ ticket.status }}</span>
+                </td>
+                <td class="text-on-surface-variant">{{ ticket.date }}</td>
+                <td class="text-right">
+                  <div class="row-actions">
+                    <button class="btn-icon" title="Ver detalhes">
+                      <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                    </button>
+                    <button class="btn-icon" title="Editar">
+                      <span class="material-symbols-outlined" style="font-size: 18px;">edit</span>
+                    </button>
+                    <button class="btn-icon btn-icon-danger" title="Excluir" (click)="deleteTicket(ticket)">
+                      <span class="material-symbols-outlined" style="font-size: 18px;">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="filteredTickets.length === 0">
+                <td colspan="9" class="empty-state">
+                  <span class="material-symbols-outlined" style="font-size: 48px; color: var(--color-outline);">search_off</span>
+                  <p class="text-body-lg text-on-surface-variant">Nenhum chamado encontrado</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
