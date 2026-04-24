@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TicketService } from '../../services/ticket.service';
+import { TicketSummaryResponseDTO  } from '../../models/ticket';
+import { AuthService } from '../../services/auth.service';
 
-interface Ticket {
-  id: string;
-  client: string;
-  subject: string;
-  technician: string;
+interface TicketView {
+  number: number;
+  title: string;
+  customerName: string;
+  value: number;
+  paymentConfirmed: boolean; 
   category: string;
   priority: string;
-  priorityClass: string;
+  technicalName?: string | null;
   status: string;
-  statusClass: string;
-  date: string;
+  createdAt: string;
 }
+
 
 @Component({
   selector: 'app-tickets',
@@ -20,52 +24,98 @@ interface Ticket {
   styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit {
-  searchTerm = '';
-  statusFilter = '';
-  categoryFilter = '';
+  tickets: TicketView[] = [];
+  isLoading = false;
+  errorMessage = '';
 
-  allTickets: Ticket[] = [
-    { id: '#1042', client: 'TechCorp Solutions', subject: 'Falha de rede no setor 3', technician: 'Carlos Mendes', category: 'Redes', priority: 'Crítica', priorityClass: 'badge-red', status: 'Crítico', statusClass: 'badge-red', date: '23/04/2026' },
-    { id: '#1041', client: 'Indústria ABC', subject: 'Servidor fora do ar', technician: 'Ana Paula', category: 'Infraestrutura', priority: 'Alta', priorityClass: 'badge-red', status: 'Em Andamento', statusClass: 'badge-yellow', date: '22/04/2026' },
-    { id: '#1040', client: 'Varejo XYZ', subject: 'Impressora sem comunicação', technician: 'Pedro Costa', category: 'Hardware', priority: 'Média', priorityClass: 'badge-yellow', status: 'Aberto', statusClass: 'badge-blue', date: '22/04/2026' },
-    { id: '#1039', client: 'Banco Beta', subject: 'Atualização de software', technician: 'Carlos Mendes', category: 'Software', priority: 'Baixa', priorityClass: 'badge-gray', status: 'Em Andamento', statusClass: 'badge-yellow', date: '21/04/2026' },
-    { id: '#1038', client: 'TechCorp Solutions', subject: 'Configuração de e-mail', technician: 'Ana Paula', category: 'Software', priority: 'Baixa', priorityClass: 'badge-gray', status: 'Finalizado', statusClass: 'badge-green', date: '20/04/2026' },
-    { id: '#1037', client: 'Indústria ABC', subject: 'Troca de HD servidor', technician: 'Pedro Costa', category: 'Hardware', priority: 'Alta', priorityClass: 'badge-red', status: 'Finalizado', statusClass: 'badge-green', date: '19/04/2026' },
-    { id: '#1036', client: 'Varejo XYZ', subject: 'Lentidão na rede Wi-Fi', technician: 'Carlos Mendes', category: 'Redes', priority: 'Média', priorityClass: 'badge-yellow', status: 'Aberto', statusClass: 'badge-blue', date: '18/04/2026' },
-    { id: '#1035', client: 'Banco Beta', subject: 'Acesso VPN colaborador', technician: 'Ana Paula', category: 'Redes', priority: 'Média', priorityClass: 'badge-yellow', status: 'Finalizado', statusClass: 'badge-green', date: '17/04/2026' }
-  ];
-
-  filteredTickets: Ticket[] = [];
-
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private ticketService: TicketService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    this.filteredTickets = [...this.allTickets];
-  }
+  this.isLoading = true;
 
-  filterTickets() {
-    this.filteredTickets = this.allTickets.filter(t => {
-      const matchSearch = !this.searchTerm ||
-        t.id.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        t.client.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        t.subject.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        t.technician.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-      const matchStatus = !this.statusFilter || t.status === this.statusFilter;
-      const matchCategory = !this.categoryFilter || t.category === this.categoryFilter;
-
-      return matchSearch && matchStatus && matchCategory;
+  if (this.authService.hasRole('CUSTOMER')) {
+    this.ticketService.getMyTickets().subscribe({
+      next: (data) => this.mapTickets(data),
+      error: () => {
+        this.errorMessage = 'Erro ao carregar seus chamados.';
+        this.isLoading = false;
+      }
+    });
+  } else {
+    this.ticketService.getAllTickets().subscribe({
+      next: (data) => this.mapTickets(data),
+      error: () => {
+        this.errorMessage = 'Erro ao carregar chamados.';
+        this.isLoading = false;
+      }
     });
   }
+}
 
-  deleteTicket(ticket: Ticket) {
-    if (confirm(`Deseja excluir o chamado ${ticket.id}?`)) {
-      this.allTickets = this.allTickets.filter(t => t.id !== ticket.id);
-      this.filterTickets();
-    }
+private mapTickets(data: TicketSummaryResponseDTO []) {
+  const sorted = data.sort((a, b) => {
+    if (a.priority === 'HIGH' && b.priority !== 'HIGH') return -1;
+    if (b.priority === 'HIGH' && a.priority !== 'HIGH') return 1;
+    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+  });
+
+  this.tickets = sorted.map((t, index) => ({
+    number: index + 1,
+    title: t.title,
+    customerName: t.customerName,
+    value: t.value ?? 0,
+    paymentConfirmed: t.paymentConfirmed,
+    category: t.category,
+    priority: this.translatePriority(t.priority),
+    technicalName: t.technicalName,
+    status: this.translateStatus(t.status),
+    createdAt: new Date(t.createdAt).toLocaleString()
+  }));
+
+  this.isLoading = false;
+}
+
+canSelfAssign(): boolean {
+  return this.authService.hasRole('TECHNICAL');
+}
+
+canAssignOthers(): boolean {
+  return this.authService.hasRole('ADMIN');
+}
+
+
+  assignToMe(ticket: TicketView) {
+    alert(`Chamado ${ticket.number} atribuído a você!`);
+    // Aqui você chamaria o backend para atualizar
   }
 
-  navigateToNewTicket() {
+  assignTechnician(ticket: TicketView) {
+    alert(`Chamado ${ticket.number} aguardando atribuição de técnico.`);
+    // Aqui você chamaria o backend para atualizar
+  }
+  navigateToNewTicket(): void {
     this.router.navigate(['/abrir-chamado']);
   }
+
+private translateStatus(status: string): string {
+  switch (status) {
+    case 'OPEN': return 'Aberto';
+    case 'ASSIGNED': return 'Em Andamento';
+    case 'CLOSED': return 'Finalizado';
+    default: return status;
+  }
+}
+
+private translatePriority(priority: string): string {
+  switch (priority) {
+    case 'HIGH': return 'Alta';
+    case 'MEDIUM': return 'Média';
+    case 'LOW': return 'Baixa';
+    default: return priority;
+  }
+}
 }

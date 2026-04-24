@@ -40,13 +40,26 @@
         <p class="text-body-md text-on-surface-variant">Preencha os dados abaixo para começar.</p>
       </div>
 
+      <!-- Mensagem de erro -->
+      <div class="form-error-banner" *ngIf="errorMessage">
+        <span class="material-symbols-outlined">error</span>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Mensagem de sucesso -->
+      <div class="form-success-banner" *ngIf="successMessage">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span>{{ successMessage }}</span>
+      </div>
+
       <form class="login-form" (ngSubmit)="onRegister()">
         <!-- Nome -->
         <div class="form-group">
           <label class="form-label" for="nome">Nome Completo</label>
           <div class="form-input-icon">
             <span class="material-symbols-outlined icon-left">person</span>
-            <input class="form-input" id="nome" type="text" placeholder="Seu nome completo" [(ngModel)]="nome" name="nome" required />
+            <input class="form-input" id="nome" type="text" placeholder="Seu nome completo"
+              [(ngModel)]="nome" name="nome" required [disabled]="isLoading" />
           </div>
         </div>
 
@@ -55,16 +68,18 @@
           <label class="form-label" for="email">Email Profissional</label>
           <div class="form-input-icon">
             <span class="material-symbols-outlined icon-left">mail</span>
-            <input class="form-input" id="email" type="email" placeholder="nome@empresa.com.br" [(ngModel)]="email" name="email" required />
+            <input class="form-input" id="email" type="email" placeholder="nome@empresa.com.br"
+              [(ngModel)]="email" name="email" required [disabled]="isLoading" />
           </div>
         </div>
 
-        <!-- Empresa -->
+        <!-- Empresa (campo opcional - não enviado ao backend) -->
         <div class="form-group">
-          <label class="form-label" for="empresa">Empresa</label>
+          <label class="form-label" for="empresa">Empresa <span class="form-label-optional">(opcional)</span></label>
           <div class="form-input-icon">
             <span class="material-symbols-outlined icon-left">business</span>
-            <input class="form-input" id="empresa" type="text" placeholder="Nome da empresa" [(ngModel)]="empresa" name="empresa" />
+            <input class="form-input" id="empresa" type="text" placeholder="Nome da empresa"
+              [(ngModel)]="empresa" name="empresa" [disabled]="isLoading" />
           </div>
         </div>
 
@@ -81,8 +96,9 @@
               [(ngModel)]="password"
               name="password"
               required
+              [disabled]="isLoading"
             />
-            <button type="button" class="icon-right" (click)="togglePassword()">
+            <button type="button" class="icon-right" (click)="togglePassword()" [disabled]="isLoading">
               <span class="material-symbols-outlined">{{ showPassword ? 'visibility' : 'visibility_off' }}</span>
             </button>
           </div>
@@ -101,8 +117,9 @@
               [(ngModel)]="confirmPassword"
               name="confirmPassword"
               required
+              [disabled]="isLoading"
             />
-            <button type="button" class="icon-right" (click)="toggleConfirmPassword()">
+            <button type="button" class="icon-right" (click)="toggleConfirmPassword()" [disabled]="isLoading">
               <span class="material-symbols-outlined">{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</span>
             </button>
           </div>
@@ -111,14 +128,15 @@
         <!-- Termos -->
         <div class="register-terms">
           <label class="register-terms-label">
-            <input type="checkbox" [(ngModel)]="acceptTerms" name="acceptTerms" />
+            <input type="checkbox" [(ngModel)]="acceptTerms" name="acceptTerms" [disabled]="isLoading" />
             <span>Aceito os <a href="#" class="login-register-link">Termos de Uso</a> e a <a href="#" class="login-register-link">Política de Privacidade</a></span>
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary login-submit-btn">
-          <span class="material-symbols-outlined">person_add</span>
-          Criar Conta
+        <button type="submit" class="btn btn-primary login-submit-btn" [disabled]="isLoading">
+          <span class="material-symbols-outlined" *ngIf="!isLoading">person_add</span>
+          <span class="btn-spinner" *ngIf="isLoading"></span>
+          {{ isLoading ? 'Criando conta...' : 'Criar Conta' }}
         </button>
       </form>
 

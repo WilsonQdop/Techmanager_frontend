@@ -46,6 +46,12 @@
         <p class="text-body-md text-on-surface-variant">Insira suas credenciais corporativas para continuar.</p>
       </div>
 
+      <!-- Mensagem de erro -->
+      <div class="form-error-banner" *ngIf="errorMessage">
+        <span class="material-symbols-outlined">error</span>
+        <span>{{ errorMessage }}</span>
+      </div>
+
       <form class="login-form" (ngSubmit)="onLogin()">
         <!-- Email -->
         <div class="form-group">
@@ -60,6 +66,7 @@
               [(ngModel)]="email"
               name="email"
               required
+              [disabled]="isLoading"
             />
           </div>
         </div>
@@ -77,8 +84,9 @@
               [(ngModel)]="password"
               name="password"
               required
+              [disabled]="isLoading"
             />
-            <button type="button" class="icon-right" (click)="togglePassword()">
+            <button type="button" class="icon-right" (click)="togglePassword()" [disabled]="isLoading">
               <span class="material-symbols-outlined">{{ showPassword ? 'visibility' : 'visibility_off' }}</span>
             </button>
           </div>
@@ -88,9 +96,10 @@
         </div>
 
         <!-- Botão -->
-        <button type="submit" class="btn btn-primary login-submit-btn">
-          <span class="material-symbols-outlined">login</span>
-          Entrar na Plataforma
+        <button type="submit" class="btn btn-primary login-submit-btn" [disabled]="isLoading">
+          <span class="material-symbols-outlined" *ngIf="!isLoading">login</span>
+          <span class="btn-spinner" *ngIf="isLoading"></span>
+          {{ isLoading ? 'Entrando...' : 'Entrar na Plataforma' }}
         </button>
       </form>
 

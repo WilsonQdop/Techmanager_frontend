@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,9 @@ import { OpenTicketComponent } from './pages/open-ticket/open-ticket.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,15 +36,23 @@ import { SettingsComponent } from './pages/settings/settings.component';
     RegisterTechnicianComponent,
     OpenTicketComponent,
     TicketsComponent,
-    SettingsComponent
+    SettingsComponent,
+    TicketDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

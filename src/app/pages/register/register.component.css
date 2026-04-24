@@ -197,3 +197,69 @@
 .login-register-link:hover {
   opacity: 0.8;
 }
+
+.form-label-optional {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-on-surface-variant);
+  margin-left: 4px;
+}
+
+/* ---- Feedback & Loading ---- */
+.form-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: var(--color-error-container, #fde8e8);
+  color: var(--color-on-error-container, #c0392b);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--color-error, #e74c3c);
+}
+
+.form-error-banner .material-symbols-outlined {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.form-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: var(--color-success-container, #e6f4ea);
+  color: var(--color-on-success-container, #1e7e34);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--color-success, #28a745);
+}
+
+.form-success-banner .material-symbols-outlined {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

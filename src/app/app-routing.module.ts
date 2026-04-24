@@ -11,17 +11,22 @@ import { OpenTicketComponent } from './pages/open-ticket/open-ticket.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
+import { AuthGuard } from './guards/auth.guard';
+
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'cadastro', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardAdminComponent },
-  { path: 'dashboard-tecnico', component: DashboardTechnicianComponent },
-  { path: 'dashboard-cliente', component: DashboardClientComponent },
-  { path: 'tecnicos', component: RegisterTechnicianComponent },
-  { path: 'abrir-chamado', component: OpenTicketComponent },
-  { path: 'chamados', component: TicketsComponent },
-  { path: 'configuracoes', component: SettingsComponent },
+  { path: '',                 redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login',            component: LoginComponent },
+  { path: 'cadastro',         component: RegisterComponent },
+
+  // Rotas protegidas — exigem token JWT válido
+  { path: 'dashboard',        component: DashboardAdminComponent,      canActivate: [AuthGuard] },
+  { path: 'dashboard-tecnico',component: DashboardTechnicianComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard-cliente',component: DashboardClientComponent,     canActivate: [AuthGuard] },
+  { path: 'tecnicos',         component: RegisterTechnicianComponent,  canActivate: [AuthGuard] },
+  { path: 'abrir-chamado',    component: OpenTicketComponent,          canActivate: [AuthGuard] },
+  { path: 'chamados',         component: TicketsComponent,             canActivate: [AuthGuard] },
+  { path: 'configuracoes',    component: SettingsComponent,            canActivate: [AuthGuard] },
+
   { path: '**', redirectTo: '/login' }
 ];
 
