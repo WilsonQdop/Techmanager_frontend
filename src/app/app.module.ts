@@ -19,9 +19,8 @@ import { RegisterTechnicianComponent } from './pages/register-technician/registe
 import { OpenTicketComponent } from './pages/open-ticket/open-ticket.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
+import { HistoryFormComponent } from './pages/history-form/history-form.component';
 
 @NgModule({
   declarations: [
@@ -37,14 +36,15 @@ import { TicketDetailsComponent } from './components/ticket-details/ticket-detai
     OpenTicketComponent,
     TicketsComponent,
     SettingsComponent,
-    TicketDetailsComponent
+    HistoryFormComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {

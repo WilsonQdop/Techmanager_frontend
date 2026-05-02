@@ -12,23 +12,27 @@ import { TicketsComponent } from './pages/tickets/tickets.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 import { AuthGuard } from './guards/auth.guard';
+import { HistoryFormComponent } from './pages/history-form/history-form.component';
 
 const routes: Routes = [
-  { path: '',                 redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login',            component: LoginComponent },
-  { path: 'cadastro',         component: RegisterComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'cadastro', component: RegisterComponent },
 
-  // Rotas protegidas — exigem token JWT válido
-  { path: 'dashboard',        component: DashboardAdminComponent,      canActivate: [AuthGuard] },
-  { path: 'dashboard-tecnico',component: DashboardTechnicianComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard-cliente',component: DashboardClientComponent,     canActivate: [AuthGuard] },
-  { path: 'tecnicos',         component: RegisterTechnicianComponent,  canActivate: [AuthGuard] },
-  { path: 'abrir-chamado',    component: OpenTicketComponent,          canActivate: [AuthGuard] },
-  { path: 'chamados',         component: TicketsComponent,             canActivate: [AuthGuard] },
-  { path: 'configuracoes',    component: SettingsComponent,            canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardAdminComponent, canActivate: [AuthGuard], },
+  { path: 'dashboard-tecnico', component: DashboardTechnicianComponent, canActivate: [AuthGuard],},
+  { path: 'dashboard-cliente', component: DashboardClientComponent, canActivate: [AuthGuard], },
 
+  { path: 'tecnicos', component: RegisterTechnicianComponent, canActivate: [AuthGuard],},
+  { path: 'abrir-chamado', component: OpenTicketComponent, canActivate: [AuthGuard],},
+  { path: 'chamados', component: TicketsComponent, canActivate: [AuthGuard],},
+  { path: 'meus-chamados', component: TicketsComponent, canActivate: [AuthGuard],  },
+  { path: 'historico', component: HistoryFormComponent, canActivate: [AuthGuard],  },
+
+  { path: 'configuracoes', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/login' }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

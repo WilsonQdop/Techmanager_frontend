@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TicketService } from '../../services/ticket.service';
-import { TicketSummaryResponseDTO  } from '../../models/ticket';
+import { TicketDetailsResponseDTO, TicketSummaryResponseDTO  } from '../../models/ticket';
 import { AuthService } from '../../services/auth.service';
 
 interface TicketView {
+  id: string;
   number: number;
   title: string;
   customerName: string;
   value: number;
-  paymentConfirmed: boolean; 
+  paymentConfirmed: boolean;
   category: string;
   priority: string;
   technicalName?: string | null;
@@ -24,6 +25,18 @@ interface TicketView {
   styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit {
+onCancel() {
+throw new Error('Method not implemented.');
+}
+onSave() {
+throw new Error('Method not implemented.');
+}
+deleteTicket(arg0: string) {
+throw new Error('Method not implemented.');
+}
+editTicket(arg0: string) {
+throw new Error('Method not implemented.');
+}
   tickets: TicketView[] = [];
   isLoading = false;
   errorMessage = '';
@@ -31,7 +44,7 @@ export class TicketsComponent implements OnInit {
   constructor(
     private router: Router,
     private ticketService: TicketService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -56,6 +69,21 @@ export class TicketsComponent implements OnInit {
   }
 }
 
+selectedTicket?: TicketDetailsResponseDTO;
+showDetails = false;
+
+openDetails(ticketId: string) {
+  this.ticketService.getTicketDetails(ticketId).subscribe(details => {
+    this.selectedTicket = details;
+    this.showDetails = true;
+  });
+}
+
+closeDetails() { this.showDetails = false; }
+
+
+
+
 private mapTickets(data: TicketSummaryResponseDTO []) {
   const sorted = data.sort((a, b) => {
     if (a.priority === 'HIGH' && b.priority !== 'HIGH') return -1;
@@ -64,7 +92,8 @@ private mapTickets(data: TicketSummaryResponseDTO []) {
   });
 
   this.tickets = sorted.map((t, index) => ({
-    number: index + 1,
+    id: t.id,
+    number: (1 + 1),
     title: t.title,
     customerName: t.customerName,
     value: t.value ?? 0,
@@ -88,15 +117,18 @@ canAssignOthers(): boolean {
 }
 
 
-  assignToMe(ticket: TicketView) {
-    alert(`Chamado ${ticket.number} atribuído a você!`);
-    // Aqui você chamaria o backend para atualizar
-  }
-
   assignTechnician(ticket: TicketView) {
-    alert(`Chamado ${ticket.number} aguardando atribuição de técnico.`);
+  
     // Aqui você chamaria o backend para atualizar
   }
+  assignToMe(ticket: TicketView) {
+    console.log("Vai da o cu")
+  // this.ticketService.assignTicket(ticketId).subscribe(() => {
+  //   alert('Chamado atribuído com sucesso!');
+  //   this.closeDetails();
+  //   this.ngOnInit(); // recarrega lista
+  // });
+}
   navigateToNewTicket(): void {
     this.router.navigate(['/abrir-chamado']);
   }

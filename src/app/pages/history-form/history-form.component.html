@@ -1,0 +1,139 @@
+<div class="app-layout">
+  <aside class="app-sidebar">
+    <div class="brand">
+      <h3 class="brand-title">TechOps Manager</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">history</span><span>History</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">confirmation_number</span><span>Tickets</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">inventory_2</span><span>Assets</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">groups</span><span>Team</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">bar_chart</span><span>Reports</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">support</span><span>Support</span></a>
+      <a class="nav-item"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-mini">
+        <div class="avatar">AS</div>
+        <div class="user-info">
+          <div class="user-name">Alexandre Souza</div>
+          <div class="user-role">SYSADMIN L3</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-topbar">
+      <div class="topbar-left">
+        <div class="breadcrumbs">TechOps Core / History / New Call History</div>
+      </div>
+      <div class="topbar-right">
+        <div class="profile">João Silva</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-container">
+
+        <div class="page-header">
+          <div>
+            <h1 class="text-h1 text-on-surface">Registrar Histórico de Chamada</h1>
+            <p class="text-body-lg text-on-surface-variant">Insira os detalhes técnicos e a evolução do status para o registro histórico do ativo.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-column">
+            <div class="card form-card">
+              <form (ngSubmit)="onSaveHistory()">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label"><span class="material-symbols-outlined">fingerprint</span>ID DO REGISTRO (AUTO)</label>
+                    <input type="text" [value]="registryId" readonly class="form-input readonly"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"><span class="material-symbols-outlined">calendar_today</span>DATA DA ALTERAÇÃO</label>
+                    <input type="datetime-local" [(ngModel)]="changeDate" name="changeDate" class="form-input"/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label"><span class="material-symbols-outlined">confirmation_number</span>VINCULAR AO CHAMADO (TICKET)</label>
+                  <div class="select-wrapper">
+                    <select [(ngModel)]="selectedTicket" name="selectedTicket" class="form-input">
+                      <option *ngFor="let ticket of tickets" [value]="ticket">{{ ticket }}</option>
+                    </select>
+                    <span class="material-symbols-outlined select-icon">settings</span>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label"><span class="material-symbols-outlined">info</span>NOVO STATUS</label>
+                    <select [(ngModel)]="newStatus" name="newStatus" class="form-input">
+                      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label"><span class="material-symbols-outlined">person</span>ATUALIZADO POR</label>
+                    <input type="text" [value]="updatedBy" readonly class="form-input readonly"/>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label"><span class="material-symbols-outlined">message</span>DETALHES DA INTERVENÇÃO (COMENTÁRIO)</label>
+                  <textarea [(ngModel)]="interventionDetails" name="interventionDetails" rows="6" placeholder="Descreva as ações tomadas, testes realizados e observações técnicas..." class="form-input textarea"></textarea>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" class="btn btn-outline" (click)="onCancel()">Cancelar</button>
+                  <button type="submit" class="btn btn-primary"><span class="material-symbols-outlined">save</span>Salvar Histórico</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <aside class="sidebar-column">
+            <div class="card context-card status-guide">
+              <h3 class="context-title"><span class="material-symbols-outlined">info</span>Guia de Status</h3>
+              <div class="status-list">
+                <div *ngFor="let status of statusGuide" class="status-item">
+                  <div class="status-dot" [ngClass]="status.color"></div>
+                  <div>
+                    <p class="status-label">{{ status.label }}</p>
+                    <p class="status-desc">{{ status.desc }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card context-card activity-card">
+              <h3 class="context-title-small">Atividade Recente (TK-915)</h3>
+              <div class="activity-timeline">
+                <div *ngFor="let activity of activities" class="activity-item" [class.latest]="activity.isLatest">
+                  <div class="activity-dot"></div>
+                  <div class="activity-content">
+                    <p class="activity-time">{{ activity.time }}</p>
+                    <p class="activity-title">{{ activity.title }}</p>
+                    <p class="activity-desc">{{ activity.description }}</p>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-outline view-history-btn">VER HISTÓRICO COMPLETO</button>
+            </div>
+
+            <div class="card context-card compliance-notice">
+              <div class="compliance-icon"><span class="material-symbols-outlined">shield_check</span></div>
+              <p class="compliance-text">Este registro é auditável e imutável após 24h conforme as políticas de compliance da <span class="font-bold">TechOps Manager</span>.</p>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
