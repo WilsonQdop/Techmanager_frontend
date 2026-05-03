@@ -12,9 +12,10 @@
   gap: 16px;
 }
 
-.stats-grid {
+#stats-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  /* grid-template-columns: repeat(1, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -91,7 +92,7 @@
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  text-align: center;
 }
 
 .data-table thead tr {

@@ -11,7 +11,7 @@ export class DashboardClientComponent {
     { label: 'Chamados Abertos', value: '3', icon: 'assignment_late', iconBg: 'var(--color-error-container)', iconColor: 'var(--color-on-error-container)', trend: '+1 hoje', trendUp: true },
     { label: 'Em Andamento', value: '1', icon: 'engineering', iconBg: 'var(--color-secondary-fixed)', iconColor: 'var(--color-on-secondary-fixed-variant)', trend: '', trendUp: false },
     { label: 'Concluídos', value: '47', icon: 'task_alt', iconBg: 'var(--color-tertiary-fixed)', iconColor: 'var(--color-on-tertiary-fixed)', trend: '+5 este mês', trendUp: false },
-    { label: 'Satisfação Média', value: '4.8★', icon: 'star', iconBg: '#fef9c3', iconColor: '#a16207', trend: '', trendUp: false }
+    // { label: 'Satisfação Média', value: '4.8★', icon: 'star', iconBg: '#fef9c3', iconColor: '#a16207', trend: '', trendUp: false }
   ];
 
   recentTickets = [

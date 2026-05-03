@@ -24,7 +24,7 @@
       </div>
 
       <!-- Metric Cards -->
-      <div class="metrics-grid">
+      <div id="metrics-grid">
         <div class="card metric-card" *ngFor="let metric of metrics">
           <div class="metric-header">
             <span class="text-label-md text-on-surface-variant metric-label">{{ metric.label }}</span>
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Grid: Tabela + Sidebar -->
-      <div class="content-grid">
+      <div id="content-grid">
         <!-- Tabela de Chamados -->
         <div class="card tickets-table-card">
           <div class="table-header">
@@ -58,7 +58,8 @@
                   <th>Cliente</th>
                   <th>Problema</th>
                   <th>Status</th>
-                  <th class="text-right">SLA</th>
+                  <th>Detalhes</th>
+                  <th class="text-right">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -69,8 +70,16 @@
                   <td>
                     <span class="badge" [ngClass]="ticket.statusClass">{{ ticket.status }}</span>
                   </td>
+                  <td>
+                    <button class="btn-icon" title="Ver detalhes">
+                      <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                    </button>
+                  </td>
                   <td class="text-right">
-                    <span class="text-label-md" [class.sla-warning]="ticket.slaWarning">{{ ticket.sla }}</span>
+                    <!-- <span class="text-label-md" [class.sla-warning]="ticket.slaWarning">+{{ ticket.sla }}</span> -->
+                     <button class="btn-icon" title="Atribuir">
+                      <span class="material-symbols-outlined" style="font-size: 18px;">link</span>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -79,7 +88,7 @@
         </div>
 
         <!-- Sidebar: Tarefas -->
-        <div class="card tasks-card">
+        <!-- <div class="card tasks-card">
           <div class="tasks-header">
             <h3 class="text-h3 text-on-surface">Tarefas do Dia</h3>
             <span class="badge badge-blue">{{ pendingTasks }} pendentes</span>
@@ -96,7 +105,7 @@
               <span class="badge" [ngClass]="task.priorityClass">{{ task.priority }}</span>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
     </div>

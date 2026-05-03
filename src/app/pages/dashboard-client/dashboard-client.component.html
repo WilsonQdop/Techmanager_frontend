@@ -18,7 +18,7 @@
       </div>
 
       <!-- Stat Cards -->
-      <div class="stats-grid">
+      <div id="stats-grid">
         <div class="card stat-card" *ngFor="let stat of stats">
           <div class="stat-header">
             <span class="text-label-md text-on-surface-variant">{{ stat.label }}</span>
@@ -49,7 +49,7 @@
                 <th>Técnico</th>
                 <th>Status</th>
                 <th>Abertura</th>
-                <th class="text-right">Ações</th>
+                <th class="text-right">Detalhes</th>
               </tr>
             </thead>
             <tbody>

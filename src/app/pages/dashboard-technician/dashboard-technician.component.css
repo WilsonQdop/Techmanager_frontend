@@ -18,9 +18,10 @@
 }
 
 /* Metrics */
-.metrics-grid {
+#metrics-grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  /* grid-template-columns: repeat(1, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -84,7 +85,7 @@
 }
 
 /* Content Grid */
-.content-grid {
+#content-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -127,7 +128,7 @@
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  text-align: center;
 }
 
 .data-table thead tr {
@@ -176,7 +177,7 @@
 }
 
 /* Tasks */
-.tasks-card {
+/* .tasks-card {
   overflow: hidden;
 }
 
@@ -232,4 +233,4 @@
 .task-title.done {
   text-decoration: line-through;
   color: var(--color-on-surface-variant);
-}
+} */

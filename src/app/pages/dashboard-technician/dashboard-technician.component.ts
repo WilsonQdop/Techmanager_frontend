@@ -38,16 +38,16 @@ export class DashboardTechnicianComponent {
       trendIcon: 'arrow_downward',
       trendError: false
     },
-    {
-      label: 'SLA Médio',
-      value: '4h 30m',
-      icon: 'timer',
-      iconBg: 'var(--color-tertiary-fixed)',
-      iconColor: 'var(--color-on-tertiary-fixed-variant)',
-      trend: '',
-      trendIcon: '',
-      trendError: false
-    }
+    // {
+    //   label: 'SLA Médio',
+    //   value: '4h 30m',
+    //   icon: 'timer',
+    //   iconBg: 'var(--color-tertiary-fixed)',
+    //   iconColor: 'var(--color-on-tertiary-fixed-variant)',
+    //   trend: '',
+    //   trendIcon: '',
+    //   trendError: false
+    // }
   ];
 
   tickets = [
@@ -57,16 +57,16 @@ export class DashboardTechnicianComponent {
     { id: '#1031', client: 'Banco Beta', problem: 'Atualização SW', status: 'Em Andamento', statusClass: 'badge-yellow', sla: '2h 10m', slaWarning: false }
   ];
 
-  tasks = [
-    { title: 'Verificar servidor de backup', client: 'TechCorp Solutions', priority: 'Alta', priorityClass: 'badge-red', done: false },
-    { title: 'Instalar atualização de segurança', client: 'Indústria ABC', priority: 'Média', priorityClass: 'badge-yellow', done: false },
-    { title: 'Relatório de manutenção preventiva', client: 'Varejo XYZ', priority: 'Baixa', priorityClass: 'badge-gray', done: true },
-    { title: 'Configurar VPN para novo colaborador', client: 'Banco Beta', priority: 'Alta', priorityClass: 'badge-red', done: false }
-  ];
+  // tasks = [
+  //   { title: 'Verificar servidor de backup', client: 'TechCorp Solutions', priority: 'Alta', priorityClass: 'badge-red', done: false },
+  //   { title: 'Instalar atualização de segurança', client: 'Indústria ABC', priority: 'Média', priorityClass: 'badge-yellow', done: false },
+  //   { title: 'Relatório de manutenção preventiva', client: 'Varejo XYZ', priority: 'Baixa', priorityClass: 'badge-gray', done: true },
+  //   { title: 'Configurar VPN para novo colaborador', client: 'Banco Beta', priority: 'Alta', priorityClass: 'badge-red', done: false }
+  // ];
 
-  get pendingTasks() {
-    return this.tasks.filter(t => !t.done).length;
-  }
+  // get pendingTasks() {
+  //   return this.tasks.filter(t => !t.done).length;
+  // }
 
   constructor(private router: Router) {}
 
